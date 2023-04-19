@@ -16,5 +16,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-RUN ["chmod". "+x", "./startup-wrapper.sh"]
+# RUN ["chmod". "+x", "./startup-wrapper.sh"]
 CMD ["./startup-wrapper.sh" ]
