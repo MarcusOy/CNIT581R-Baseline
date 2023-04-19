@@ -20,15 +20,19 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build . -t cnit581r:latest
+        run: docker build . -t cnit581malware/baseline:latest
       - name: Send ntfy.sh message
         run: curl -d "New Research image complete." ntfy.sh/marcus-build?title=GithubActionsRunner
 
-  # deploy:
-  #   needs: build
-  #   runs-on: self-hosted
-  #   steps:
-  #     - name: Send ntfy.sh message
-  #       run: curl -d "Pushing new Argo image..." ntfy.sh/marcus-build?title=GithubActionsRunner
-  #     - name: Push Docker image
-  #       run: docker push registry.orciuch.lcl/argo:latest
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Send ntfy.sh message
+        run: curl -d "Pushing new Argo image..." ntfy.sh/marcus-build?title=GithubActionsRunner
+      - name: Authenticate Docker Hub Account
+        run: docker login --username ${{ secrets.DH_USERNAME }} --password ${{ secrets.DH_PASSWORD }}
+      - name: Push Docker image
+        run: docker push cnit581malware/baseline:latest
+      - name: Send ntfy.sh message
+        run: curl -d "Successfully build Research image..." ntfy.sh/marcus-build?title=GithubActionsRunner
