@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 8080
 # RUN ["chmod". "+x", "./startup-wrapper.sh"]
-CMD ["./startup-wrapper.sh" ]
+CMD ["/bin/bash", "./startup-wrapper.sh" ]
